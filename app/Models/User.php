@@ -42,4 +42,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function portal()
+    {
+        return $this->hasOne(Subscription::class,'owner_id');
+    }
 }

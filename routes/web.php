@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HospitalController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('subscriptions', SubscriptionController::class);
+    Route::resource('locations', LocationController::class);
     Route::resource('hospitals', HospitalController::class);
     Route::resource('doctors', DoctorController::class);
     Route::get('/appoinments', function ()

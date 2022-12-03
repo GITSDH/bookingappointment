@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
@@ -43,6 +45,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -60,6 +63,11 @@ class UserController extends Controller
         ]);
 
         $user->assignRole([$role->id]);
+
+        if ($request->role == 2) {
+            $randomnum = 'BNA'.date('ymdHis');
+            $subscription = Subscription::create(['sub_number' => $randomnum,'owner_id' => $user->id]);
+        }
 
         return redirect()->route('users.index');
     }

@@ -19,15 +19,15 @@ class SuperAdminSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
+        $superadmin = User::create([
             'name' => 'Super Admin',
-            'email' => 'admin@app.com',
-            'password' => Hash::make('admin123'),
+            'email' => 'superadmin@app.com',
+            'password' => Hash::make('superadmin123'),
         ]);
 
-        $role = Role::create(['name' => 'Super Admin']);
+        $role = Role::where('name','superadmin')->first();
         $permissions = Permission::pluck('id','id')->all();
         $role->syncPermissions($permissions);
-        $user->assignRole([$role->id]);
+        $superadmin->assignRole([$role->id]);
     }
 }

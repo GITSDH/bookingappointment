@@ -22,6 +22,7 @@ class SubscriptionController extends Controller
         if ($request->ajax()) {
             return Datatables::of(Subscription::query())->addIndexColumn()->make(true);
         }
+        
         return view('subscriptions.index');
     }
 
@@ -37,7 +38,7 @@ class SubscriptionController extends Controller
         //         $q->where('name', 'admin');
         //     }
         // )->get();
-        
+
         $admins = User::role('admin')->get();
 
         return $admins;

@@ -35,6 +35,10 @@
         <span class="iconify" data-icon="mdi:subscriber-identification-module-outline"></span>
         <p class="sidelinktext">Subscriptions</p>
     </x-sidenav-link>
+    <x-sidenav-link :href="route('locations.index')" :active="request()->routeIs('locations.*')">
+        <span class="iconify" data-icon="material-symbols:location-on-outline"></span>
+        <p class="sidelinktext">Locations</p>
+    </x-sidenav-link>
     <x-sidenav-link :href="route('hospitals.index')" :active="request()->routeIs('hospitals.*')">
         <span class="iconify" data-icon="carbon:hospital"></span>
         <p class="sidelinktext">Facilities</p>
