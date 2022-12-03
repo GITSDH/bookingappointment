@@ -43,6 +43,10 @@
         <span class="iconify" data-icon="carbon:hospital"></span>
         <p class="sidelinktext">Facilities</p>
     </x-sidenav-link>
+    <x-sidenav-link :href="route('specialities.index')" :active="request()->routeIs('specialities.*')">
+        <span class="iconify" data-icon="icon-park-outline:degree-hat"></span>
+        <p class="sidelinktext">Specialities</p>
+    </x-sidenav-link>
     <x-sidenav-link :href="route('doctors.index')" :active="request()->routeIs('doctors.*')">
         <span class="iconify" data-icon="maki:doctor"></span>
         <p class="sidelinktext">Doctors</p>
