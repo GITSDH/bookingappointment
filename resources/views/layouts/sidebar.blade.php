@@ -47,6 +47,10 @@
         <span class="iconify" data-icon="icon-park-outline:degree-hat"></span>
         <p class="sidelinktext">Specialities</p>
     </x-sidenav-link>
+    <x-sidenav-link :href="route('slots.index')" :active="request()->routeIs('slots.*')">
+        <span class="iconify" data-icon="bi:clock"></span>
+        <p class="sidelinktext">Slots</p>
+    </x-sidenav-link>
     <x-sidenav-link :href="route('doctors.index')" :active="request()->routeIs('doctors.*')">
         <span class="iconify" data-icon="maki:doctor"></span>
         <p class="sidelinktext">Doctors</p>

@@ -42,7 +42,9 @@ class SpecialityController extends Controller
      */
     public function store(StoreSpecialityRequest $request)
     {
-        //
+        $speciality = Speciality::create(['name' => $request->name]);
+        return view('specialities.index');
+
     }
 
     /**
@@ -64,7 +66,7 @@ class SpecialityController extends Controller
      */
     public function edit(Speciality $speciality)
     {
-        //
+        return $speciality;
     }
 
     /**
@@ -85,8 +87,10 @@ class SpecialityController extends Controller
      * @param  \App\Models\Speciality  $speciality
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Speciality $speciality)
+    public function destroy($id)
     {
-        //
+        $user = Speciality::find($id);
+        $user->delete();
+        return response()->json(['status' => 'success', 'message' => 'Speciality deleted successfylly !']);
     }
 }

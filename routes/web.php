@@ -7,6 +7,7 @@ use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SlotController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\SubscriptionController;
 
@@ -40,6 +41,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('hospitals', HospitalController::class);
     Route::resource('doctors', DoctorController::class);
     Route::resource('specialities', SpecialityController::class);
+    Route::resource('slots', SlotController::class);
     Route::get('/appoinments', function ()
     {
         return view('appoinments.index');

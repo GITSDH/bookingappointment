@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
+use App\Models\Hospital;
+use App\Models\Slot;
+use App\Models\Speciality;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,8 +39,10 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        return view('doctors.create',compact('roles'));
+        $specialities = Speciality::all();
+        $hospitals= Hospital::where('subscription_id',Auth::user()->portal->id)->get();
+        $slots = Slot::where('subscription_id',Auth::user()->portal->id)->get();
+        return view('doctors.create',compact('specialities','hospitals','slots'));
     }
 
     /**
@@ -46,6 +53,7 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -62,11 +70,27 @@ class DoctorController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-
+        $doctor = new Doctor;
+        $doctor->user_id  = $user->id;
+        $doctor->speciality_id   = $request->speciality;
+        $doctor->hospital_id   = $request->hospital;
+        $doctor->slot_id   = $request->slot_id;
+        $doctor->nationality  = $request->nationality;
+        $doctor->gender  = $request->gender;
+        $doctor->language  = $request->language;
+        if ($request->file('photo')) {
+            $thumbnail = $request->file('photo');
+            $image_full_name = time().'_'.str_replace([" ", "."], ["_","a"],$user->name).'.'.$thumbnail->getClientOriginalExtension();
+            $upload_path = 'images/doctor/photo/';
+            $image_url = $upload_path.$image_full_name;
+            $success = $thumbnail->move($upload_path, $image_full_name);
+            $doctor->photo = $image_url;
+        }
+        $doctor->save();
 
         $user->assignRole([$role->id]);
 
-        return redirect()->route('users.index');
+        return redirect()->route('doctors.index');
     }
 
     /**
