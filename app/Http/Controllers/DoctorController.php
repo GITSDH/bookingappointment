@@ -9,6 +9,7 @@ use App\Models\Speciality;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Models\User;
+use App\Models\UserSubscription;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
@@ -58,11 +59,9 @@ class DoctorController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed'],
-            'role' => ['required'],
         ]);
 
 
-        $role = Role::where('name','doctor');
 
         $user = User::create([
             'name' => $request->name,
@@ -78,6 +77,7 @@ class DoctorController extends Controller
         $doctor->nationality  = $request->nationality;
         $doctor->gender  = $request->gender;
         $doctor->language  = $request->language;
+        $doctor->subscription_id  = Auth::user()->portal->id;
         if ($request->file('photo')) {
             $thumbnail = $request->file('photo');
             $image_full_name = time().'_'.str_replace([" ", "."], ["_","a"],$user->name).'.'.$thumbnail->getClientOriginalExtension();
@@ -88,6 +88,8 @@ class DoctorController extends Controller
         }
         $doctor->save();
 
+
+        $role = Role::where('name','doctor')->first();
         $user->assignRole([$role->id]);
 
         return redirect()->route('doctors.index');

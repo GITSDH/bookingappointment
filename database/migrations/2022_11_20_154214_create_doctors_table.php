@@ -27,6 +27,9 @@ return new class extends Migration
             $table->unsignedBigInteger('slot_id');
             $table->foreign('slot_id')->references('id')->on('slots')->onDelete('cascade');
 
+            $table->unsignedBigInteger('subscription_id');
+            $table->foreign('subscription_id')->references('id')->on('subscriptions')->onDelete('cascade');
+
             $table->string('nationality');
             $table->string('gender');
             $table->string('language');
