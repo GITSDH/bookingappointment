@@ -1,0 +1,13 @@
+{{-- @if (Route::has('login'))
+<div class="fixed top-0 right-0 p-2 mt-4 mr-4 sm:block bg-white rounded-full" style="color: #ed1c24;">
+    @auth
+        <a href="{{ url('/dashboard') }}" class="text-sm font-semibold hover:bg-gray-200 px-2 py-1 rounded-full">Dashboard</a>
+    @else
+        <a href="{{ route('login') }}" class="text-sm font-semibold hover:bg-gray-200 px-2 py-1 rounded-full">Log in</a>
+
+        @if (Route::has('register'))
+            <a href="{{ route('register') }}" class="ml-4 text-sm font-semibold hover:bg-gray-200 px-2 py-1 rounded-full">Register</a>
+        @endif
+    @endauth
+</div>
+@endif --}}

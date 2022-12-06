@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PermissionController;
@@ -22,17 +23,13 @@ use App\Http\Controllers\SubscriptionController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['namespace' => 'App\Http\Controllers','middleware' => ['auth']], function(){
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
 Route::group(['middleware' => ['auth']], function() {
-
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
@@ -42,6 +39,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('doctors', DoctorController::class);
     Route::resource('specialities', SpecialityController::class);
     Route::resource('slots', SlotController::class);
+    
     Route::get('/appoinments', function ()
     {
         return view('appoinments.index');

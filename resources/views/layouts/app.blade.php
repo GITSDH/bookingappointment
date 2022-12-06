@@ -15,7 +15,6 @@
 
     <script>
         let BASE_URL = {!! json_encode(url('/')) !!} + "/";
-        
     </script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -31,8 +30,6 @@
 
     <div class="min-h-screen bg-gray-100 flex-grow">
         @include('layouts.navigation')
-
-
 
         <!-- Page Content -->
         <main>
