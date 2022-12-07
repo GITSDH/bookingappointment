@@ -9,22 +9,28 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+        @if (isset($headstyle))
+            {{ $headstyle }}
+        @endif
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body>
+    <body class="">
         <header>
             @include('layouts.client-topbar')
             @if (isset($navbar))
             @include('layouts.client-navbar')
             @endif
         </header>
-        <div class="font-sans text-gray-900 antialiased h-screen	">
+        <div class="font-sans text-gray-900 antialiased min-h-screen">
             {{ $slot }}
         </div>
         @include('layouts.client-footer')
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iconify/2.0.0/iconify.min.js" integrity="sha512-lYMiwcB608+RcqJmP93CMe7b4i9G9QK1RbixsNu4PzMRJMsqr/bUrkXUuFzCNsRUo3IXNUr5hz98lINURv5CNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        @if (isset($script))
+            {{ $script }}
+        @endif
     </body>
 </html>

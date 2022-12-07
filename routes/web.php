@@ -27,6 +27,8 @@ use App\Http\Controllers\SubscriptionController;
 Route::group(['namespace' => 'App\Http\Controllers','middleware' => ['auth']], function(){
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+    Route::get('/bookAppointment', 'AppoinmentController@bookAppoinment')->name('bookAppointment');
+    Route::get('/myappoinment', 'AppoinmentController@myappoinment')->name('myappoinment');
 });
 
 Route::group(['middleware' => ['auth']], function() {
@@ -39,11 +41,17 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('doctors', DoctorController::class);
     Route::resource('specialities', SpecialityController::class);
     Route::resource('slots', SlotController::class);
-    
+
+
     Route::get('/appoinments', function ()
     {
         return view('appoinments.index');
     })->name('appoinments.index');
+    Route::get('/servieceDetails',function()
+    {
+        return view('servieceDetails');
+    })->name('servieceDetails');
+
 
 });
 require __DIR__.'/auth.php';

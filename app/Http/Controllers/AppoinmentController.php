@@ -18,6 +18,17 @@ class AppoinmentController extends Controller
         //
     }
 
+    public function bookAppoinment()
+    {
+        return view('bookAppointment');
+    }
+
+    public function myappoinment()
+    {
+        # code...
+        return view('myappoinment');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

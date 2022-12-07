@@ -1,16 +1,4 @@
 <x-app-layout>
-    <x-slot name="submenu">
-        <!-- Navigation Links -->
-        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-            <x-nav-link :href="route('subscriptions.index')" :active="request()->routeIs('subscriptions.index')">
-                {{ __('All Subscriptions') }}
-            </x-nav-link>
-            <x-nav-link :href="route('subscriptions.create')" :active="request()->routeIs('subscriptions.create')">
-                {{ __('Add New Subscriber') }}
-            </x-nav-link>
-        </div>
-    </x-slot>
-
     <div class="p-6">
         <table id="userTable" class="display stripe" style="width:100%">
             <thead>
