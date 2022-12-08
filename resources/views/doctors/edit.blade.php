@@ -12,9 +12,9 @@
     </x-slot>
 
     <div class="p-6 ">
-        <form method="POST" action="{{ route('doctors.store') }}">
+        <form method="POST" action="{{ route('doctors.update',$user->id) }}">
             @csrf
-
+            @method('PATCH')
             <!-- Name -->
             <div>
                 <x-input-label for="name" :value="__('Name')" />
@@ -128,15 +128,6 @@
                 </select>
             </div>
 
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-input-label for="email" :value="__('Email')" />
-
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" value="{{$user->email}}"
-                    required />
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
-            </div>
 
             <div class="mt-4">
                 <label for="speciality" class="block text-sm font-medium text-gray-700">Speciality</label>

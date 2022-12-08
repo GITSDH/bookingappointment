@@ -11,32 +11,44 @@
             <fieldset>
                 <div class="my-4 flex items-center gap-6">
                     <div class="flex items-center">
-                        <input id="push-everything" name="push-notifications" type="radio"
+                        <input id="selectfacility" name="searchby" type="radio"
                             class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                        <label for="push-everything" class="ml-3 block text-sm font-medium text-gray-700">Select by
+                        <label for="selectfacility" class="ml-3 block text-sm font-medium text-gray-700">Select by
                             facility</label>
                     </div>
                     <div class="flex items-center">
-                        <input id="push-email" name="push-notifications" type="radio"
+                        <input id="selectappoinment" name="searchby" type="radio"
                             class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                        <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700">Search by
+                        <label for="selectappoinment" class="ml-3 block text-sm font-medium text-gray-700">Search by
                             appointment type</label>
                     </div>
                 </div>
             </fieldset>
+            <!-- Appointment Type -->
+            <div class="mt-4 hidden appo1">
+                <x-input-label for="email" :value="__('Appointment Type')" />
+
+                <x-text-input id="email" class="block mt-1 w-full rounded-full" type="email" name="email"
+                    :value="old('email')" required />
+
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            </div>
 
             <!-- Name -->
-            <div>
+            <div class="mt-4">
                 <x-input-label for="name" :value="__('Facility')" />
 
-                <x-text-input id="name" class="block mt-1 w-full rounded-full" type="text" name="name"
-                    :value="old('name')" required autofocus />
+                <select id="role" name="role" class="mt-1 block w-full rounded-full border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                    @foreach ($hospitals as $item)
+                    <option value="{{$item->id}}">{{$item->name}}</option>
+                    @endforeach
+                </select>
 
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
             <!-- Appointment Type -->
-            <div class="mt-4">
+            <div class="mt-4 appo2">
                 <x-input-label for="email" :value="__('Appointment Type')" />
 
                 <x-text-input id="email" class="block mt-1 w-full rounded-full" type="email" name="email"
@@ -59,7 +71,7 @@
             <div class="mt-4">
                 <x-input-label for="password_confirmation" :value="__('Preferred Date')" />
 
-                <x-text-input id="password_confirmation" class="block mt-1 w-full rounded-full" type="password"
+                <x-text-input id="password_confirmation" class="block mt-1 w-full rounded-full" type="date"
                     name="password_confirmation" required />
 
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
@@ -147,6 +159,21 @@
         <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
         <script>
             $(document).ready( function () {
+                $('#selectfacility').attr('checked', true);
+                let search = $('input[name="searchby"]');
+                search.change(function (e) {
+                    e.preventDefault();
+                    if($('#selectappoinment').is(':checked')){
+                        $('.appo1').removeClass('hidden');
+                        $('.appo2').addClass('hidden');
+                    }
+                    if($('#selectfacility').is(':checked')){
+                        $('.appo2').removeClass('hidden');
+                        $('.appo1').addClass('hidden');
+                    }
+                    // appo1
+                });
+                // Data table
                 $('#appoinmenttable').DataTable({
                     paging: false,
                     ordering: false,

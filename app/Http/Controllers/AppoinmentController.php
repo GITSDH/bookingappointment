@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appoinment;
 use App\Http\Requests\StoreAppoinmentRequest;
 use App\Http\Requests\UpdateAppoinmentRequest;
+use App\Models\Hospital;
 
 class AppoinmentController extends Controller
 {
@@ -20,7 +21,8 @@ class AppoinmentController extends Controller
 
     public function bookAppoinment()
     {
-        return view('bookAppointment');
+        $hospitals = Hospital::all();
+        return view('bookAppointment',compact('hospitals'));
     }
 
     public function myappoinment()

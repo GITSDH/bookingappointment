@@ -17,7 +17,7 @@
             <!-- Email Address -->
             <div class="mt-4 relative">
                 <x-text-input id="email" class="block mt-1 w-full rounded-full bg-violet-100 pl-9 text-violet-500" type="email" name="email" :value="old('email')" required placeholder="email@example.com"/>
-                <span class="iconify absolute left-4 top-1/2 -translate-y-1/2 text-violet-500" data-icon="eva:email-fill"></span>
+                <span class="iconify absolute left-4 top-[13px] text-violet-500" data-icon="eva:email-fill"></span>
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
@@ -28,7 +28,7 @@
                                 type="password"
                                 name="password"
                                 required autocomplete="new-password"/>
-                                <span class="iconify absolute left-4 top-1/2 -translate-y-1/2 text-violet-500"
+                                <span class="iconify absolute left-4 top-[13px] text-violet-500"
                     data-icon="material-symbols:vpn-key-rounded"></span>
 
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />

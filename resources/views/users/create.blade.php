@@ -44,7 +44,7 @@
                     <option value="2">Admin</option>
                     @endrole
                 </select>
-              </div>
+            </div>
 
             <!-- Password -->
             <div class="mt-4">

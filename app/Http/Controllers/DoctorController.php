@@ -130,24 +130,32 @@ class DoctorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-        ]);
-
-        $role = Role::find($request->role);
         $user = User::find($id);
         $user->name = $request->name;
+        $user->update();
 
-        $otheruserwithemail = User::where('email',$request->email)->where('id','!=',$id)->first();
-        if ($otheruserwithemail) {
-            return redirect()->route('users.edit',$id)->withErrors('This email already in use.');
-        }else {
-            $user->email = $request->email;
+        $doctor = Doctor::where('user_id',$id)->first();
+        $doctor->nationality  = $request->nationality;
+        $doctor->gender  = $request->gender;
+        $doctor->language  = $request->language;
+        $doctor->speciality_id   = $request->speciality;
+        $doctor->hospital_id   = $request->hospital;
+        $doctor->slot_id   = $request->slot_id;
+
+        if ($request->file('photo')) {
+            if (\File::exists($doctor->photo)) {
+                \File::delete($doctor->photo);
+            }
+            $thumbnail = $request->file('photo');
+            $image_full_name = time().'_'.str_replace([" ", "."], ["_","a"],$user->name).'.'.$thumbnail->getClientOriginalExtension();
+            $upload_path = 'images/doctor/photo/';
+            $image_url = $upload_path.$image_full_name;
+            $success = $thumbnail->move($upload_path, $image_full_name);
+            $doctor->photo = $image_url;
         }
-        $user->save();
-        $user->assignRole([$role->id]);
-        return redirect()->route('users.index');
+        $doctor->save();
+
+        return redirect()->route('doctors.index');
     }
 
     /**
@@ -158,8 +166,10 @@ class DoctorController extends Controller
      */
     public function destroy($id)
     {
+        $doctor = Doctor::where('user_id',$id)->first();
+        $doctor->delete();
         $user = User::find($id);
         $user->delete();
-        return response()->json(['status' => 'success', 'message' => 'User deleted successfylly !']);
+        return response()->json(['status' => 'success', 'message' => 'Doctor deleted successfylly !']);
     }
 }

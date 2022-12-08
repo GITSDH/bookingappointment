@@ -1,4 +1,4 @@
-<div class="flex flex-col sm:justify-center items-center pt-6 sm:py-10 bg-gray-100">
+<div class="flex flex-col sm:justify-center items-center pt-6 sm:py-10 ">
     <div class="text-center">
         {{ $logo }}
     </div>

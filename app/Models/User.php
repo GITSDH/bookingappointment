@@ -43,12 +43,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = ['subscription'];
+
 
 
     public function portal()
     {
         return $this->hasOne(Subscription::class,'owner_id');
     }
+
+    public function subscription()
+    {
+        return $this->belongsToMany(Subscription::class, 'user_subscriptions');
+
+    }
+
 
     public function docprofile()
     {

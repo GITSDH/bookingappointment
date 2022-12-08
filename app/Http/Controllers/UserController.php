@@ -6,6 +6,7 @@ use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Models\User;
+use App\Models\UserSubscription;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +21,23 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // return Auth::user()->portal->id;
+        // $user = User::find(9);
+        // return User::find(9)->subscription->first()->id;
+        // return Auth::user()->subscription;
+        // return User::whereHas('subscription', function($q){
+        //     $q->where('id', 1);
+        // })->get();
+
         if ($request->ajax()) {
+            // if (Auth::user()->hasRole('admin')) {
+            //     return Datatables::of(
+            //         User::whereHas('subscription', function($q){
+            //             $q->where('id', Auth::user()->portal->id);
+            //         })
+            //         )->addIndexColumn()->make(true);
+
+            // }
             return Datatables::of(User::query())->addIndexColumn()->make(true);
         }
         return view('users.index');
@@ -55,18 +72,23 @@ class UserController extends Controller
 
 
         $role = Role::find($request->role);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
         $user->assignRole([$role->id]);
 
+        // Assigning subscription
         if ($request->role == 2) {
             $randomnum = 'BNA'.date('ymdHis');
             $subscription = Subscription::create(['sub_number' => $randomnum,'owner_id' => $user->id]);
+        }
+
+        // Ceating user subscription
+        if (Auth::user()->hasRole('admin')) {
+            $sub = Subscription::where('owner_id', Auth::user()->id)->first();
+            $usersub = UserSubscription::create(['user_id' => $user->id, 'subscription_id' => $sub->id]);
         }
 
         return redirect()->route('users.index');
