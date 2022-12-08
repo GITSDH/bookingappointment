@@ -1,9 +1,8 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+            <h2 class="font-bold text-2xl">Ops!</h2>
+            <p>Input your email</p>
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
@@ -13,19 +12,19 @@
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <form method="POST" action="{{ route('password.email') }}">
+        <form method="POST" action="{{ route('password.email') }}" class="sm:mb-[350px]">
             @csrf
 
             <!-- Email Address -->
-            <div>
-                <x-input-label for="email" :value="__('Email')" />
+            <div class="relative">
+                <x-text-input id="email" class="block mt-1 w-full rounded-full bg-violet-100 pl-9 text-violet-500" type="email" name="email" :value="old('email')" required autofocus />
+                <span class="iconify absolute left-4 top-1/2 -translate-y-1/2 text-violet-500" data-icon="eva:email-fill"></span>
 
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
 
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-center mt-4">
                 <x-primary-button>
                     {{ __('Email Password Reset Link') }}
                 </x-primary-button>

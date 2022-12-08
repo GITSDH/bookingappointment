@@ -1,4 +1,4 @@
-<div class="bg-violet-50">
+<div class="bg-violet-100">
     <div class="container mx-auto flex justify-end py-2">
         @auth
 
@@ -18,9 +18,9 @@
                                         this.closest('form').submit();">
                     {{ __('Profile') }}
                 </x-dropdown-link>
-                <x-dropdown-link :href="route('dashboard')">
+                {{-- <x-dropdown-link :href="route('dashboard')">
                             {{ __('Dashboard') }}
-                </x-dropdown-link>
+                </x-dropdown-link> --}}
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

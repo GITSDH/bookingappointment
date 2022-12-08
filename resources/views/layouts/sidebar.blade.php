@@ -27,14 +27,25 @@
         <span class="iconify" data-icon="mingcute:dashboard-2-line"></span>
         <p class="sidelinktext">Dashboard</p>
     </x-sidenav-link>
+    @role('admin')
     <x-sidenav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
         <span class="iconify" data-icon="ph:users"></span>
         <p class="sidelinktext">Users</p>
     </x-sidenav-link>
+    @endrole
+    @role('superadmin')
+    <x-sidenav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+        <span class="iconify" data-icon="ph:users"></span>
+        <p class="sidelinktext">Users</p>
+    </x-sidenav-link>
+    @endrole
+    @role('superadmin')
     <x-sidenav-link :href="route('subscriptions.index')" :active="request()->routeIs('subscriptions.*')">
         <span class="iconify" data-icon="mdi:subscriber-identification-module-outline"></span>
         <p class="sidelinktext">Subscriptions</p>
     </x-sidenav-link>
+    @endrole
+    @role('admin')
     <x-sidenav-link :href="route('locations.index')" :active="request()->routeIs('locations.*')">
         <span class="iconify" data-icon="material-symbols:location-on-outline"></span>
         <p class="sidelinktext">Locations</p>
@@ -55,6 +66,9 @@
         <span class="iconify" data-icon="maki:doctor"></span>
         <p class="sidelinktext">Doctors</p>
     </x-sidenav-link>
+    @endrole
+
+    @role('superadmin')
     <x-sidenav-link :href="route('permissions.index')" :active="request()->routeIs('permissions.*')">
         <span class="iconify" data-icon="fluent:key-20-regular"></span>
         <p class="sidelinktext">Permissions</p>
@@ -63,8 +77,24 @@
         <span class="iconify" data-icon="fluent:phone-key-24-regular"></span>
         <p class="sidelinktext">Roles</p>
     </x-sidenav-link>
+    @endrole
+    @role('admin')
     <x-sidenav-link :href="route('appoinments.index')" :active="request()->routeIs('appoinments.*')">
         <span class="iconify" data-icon="icon-park-outline:appointment"></span>
         <p class="sidelinktext">Appointments</p>
     </x-sidenav-link>
+    @endrole
+    @role('employee')
+    <x-sidenav-link :href="route('appoinments.index')" :active="request()->routeIs('appoinments.*')">
+        <span class="iconify" data-icon="icon-park-outline:appointment"></span>
+        <p class="sidelinktext">Appointments</p>
+    </x-sidenav-link>
+    @endrole
+    @role('doctor')
+    <x-sidenav-link :href="route('appoinments.index')" :active="request()->routeIs('appoinments.*')">
+        <span class="iconify" data-icon="icon-park-outline:appointment"></span>
+        <p class="sidelinktext">Appointments</p>
+    </x-sidenav-link>
+    @endrole
+
 </div>
