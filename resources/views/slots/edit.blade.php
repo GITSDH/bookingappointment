@@ -27,7 +27,7 @@
                 <div>
                     <x-input-label for="start" :value="__('Start Time')" />
 
-                    <x-text-input id="start" class="block mt-1 w-full" type="time" name="start" value="{{$slot->end}}" required autofocus />
+                    <x-text-input id="start" class="block mt-1 w-full" type="time" name="start" value="{{$slot->start}}" required autofocus />
 
                     <x-input-error :messages="$errors->get('start')" class="mt-2" />
                 </div>

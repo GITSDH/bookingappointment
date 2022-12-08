@@ -41,11 +41,7 @@ class RegisteredUserController extends Controller
         ]);
 
 
-        if (User::count() <= 0) {
-            $role = Role::create(['name' => 'Super Admin']);
-            $permissions = Permission::pluck('id','id')->all();
-            $role->syncPermissions($permissions);
-        }
+        $role = Role::where('name','user')->first();
 
 
         $user = User::create([
