@@ -48,18 +48,18 @@
                         {
                             data: null,
                             render: function(data) {
-                                return `<div class="flex"><a href="${BASE_URL}users/${data.id}/edit" class="bg-green-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-green-700" ><span class="iconify" data-icon="dashicons:edit"></span></a>
-                                <button type="button"  class="bg-red-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-red-700" onclick="userDelete(${data.id});"><span class="iconify" data-icon="bi:trash-fill"></span></button></div>`;
+                                return `<div class="flex"><a href="${BASE_URL}doctors/${data.id}/edit" class="bg-green-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-green-700" ><span class="iconify" data-icon="dashicons:edit"></span></a>
+                                <button type="button"  class="bg-red-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-red-700" onclick="doctorDelete(${data.id});"><span class="iconify" data-icon="bi:trash-fill"></span></button></div>`;
                             }
                         }
                     ]
                 });
 
 
-            function userDelete(userID) {
+            function doctorDelete(userID) {
                 Swal.fire({
                     title: "Delete ?",
-                    text: "Are you sure to delete this User ?",
+                    text: "Are you sure to delete this Doctor ?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -69,7 +69,7 @@
                     if (result.value) {
                         $.ajax({
                             method: 'DELETE',
-                            url: BASE_URL +'users/'+userID,
+                            url: BASE_URL +'doctors/'+userID,
                             success: function(response) {
                                 if (response.status == "success") {
                                     Swal.fire('Success!', response.message, 'success');

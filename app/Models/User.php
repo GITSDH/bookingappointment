@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Subscription::class,'owner_id');
     }
+
+    public function docprofile()
+    {
+        return $this->hasOne(Doctor::class,'user_id');
+    }
 }

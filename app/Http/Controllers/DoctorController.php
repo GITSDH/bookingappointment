@@ -114,9 +114,11 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
-        $roles = Role::all();
-        $user = User::find($id);
-        return view('doctors.edit',compact('user','roles'));
+        $user = User::where('id',$id)->with('docprofile')->first();
+        $specialities = Speciality::all();
+        $hospitals= Hospital::where('subscription_id',Auth::user()->portal->id)->get();
+        $slots = Slot::where('subscription_id',Auth::user()->portal->id)->get();
+        return view('doctors.edit',compact('user','specialities','hospitals','slots'));
     }
 
     /**
@@ -128,10 +130,11 @@ class DoctorController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'role' => ['required'],
         ]);
 
         $role = Role::find($request->role);

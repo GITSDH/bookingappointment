@@ -66,7 +66,7 @@ class SpecialityController extends Controller
      */
     public function edit(Speciality $speciality)
     {
-        return $speciality;
+        return view('specialities.edit',compact('speciality'));
     }
 
     /**
@@ -78,7 +78,9 @@ class SpecialityController extends Controller
      */
     public function update(UpdateSpecialityRequest $request, Speciality $speciality)
     {
-        //
+        $speciality->name = $request->name;
+        $speciality->update();
+        return view('specialities.index');
     }
 
     /**

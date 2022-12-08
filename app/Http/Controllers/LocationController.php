@@ -20,7 +20,7 @@ class LocationController extends Controller
         if ($request->ajax()) {
             return Datatables::of(Location::query())->addIndexColumn()->make(true);
         }
-        
+
         return view('locations.index');
     }
 
@@ -31,7 +31,8 @@ class LocationController extends Controller
      */
     public function create()
     {
-        //
+        return view('locations.create');
+
     }
 
     /**
@@ -42,7 +43,8 @@ class LocationController extends Controller
      */
     public function store(StoreLocationRequest $request)
     {
-        //
+        $location = Location::create(['name'=>$request->name]);
+        return redirect()->route('locations.index');
     }
 
     /**
@@ -62,9 +64,11 @@ class LocationController extends Controller
      * @param  \App\Models\Location  $location
      * @return \Illuminate\Http\Response
      */
-    public function edit(Location $location)
+    public function edit($id)
     {
-        //
+        // return $id;
+        $location = Location::find($id);
+        return view('locations.edit',compact('location'));
     }
 
     /**
@@ -76,7 +80,9 @@ class LocationController extends Controller
      */
     public function update(UpdateLocationRequest $request, Location $location)
     {
-        //
+        $location->name = $request->name;
+        $location->update();
+        return redirect()->route('locations.index');
     }
 
     /**
@@ -85,8 +91,10 @@ class LocationController extends Controller
      * @param  \App\Models\Location  $location
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Location $location)
+    public function destroy($id)
     {
-        //
+        $location = Location::find($id);
+        $location->delete();
+        return response()->json(['status' => 'success', 'message' => 'Location deleted successfylly !']);
     }
 }

@@ -52,6 +52,7 @@ class HospitalController extends Controller
         // return $subID = Auth::user()->portal->sub_number;
         // return $request;
 
+
         $subscription =  Subscription::where('sub_number',Auth::user()->portal->sub_number)->first();
 
         $hospital = new Hospital();
@@ -94,7 +95,10 @@ class HospitalController extends Controller
      */
     public function edit(Hospital $hospital)
     {
-        //
+        $hospital = $hospital;
+        $locations = Location::all();
+
+        return view('hospitals.edit', compact('hospital','locations'));
     }
 
     /**
@@ -106,7 +110,27 @@ class HospitalController extends Controller
      */
     public function update(UpdateHospitalRequest $request, Hospital $hospital)
     {
-        //
+        $hospital->name = $request->name;
+        $hospital->type = $request->type;
+        $hospital->location_id = $request->location;
+        $hospital->description = $request->description;
+
+
+        if ($request->file('logo')) {
+            if (\File::exists($hospital->logo)) {
+                \File::delete($hospital->logo);
+            }
+            $thumbnail = $request->file('logo');
+            $image_full_name = time().'_'.str_replace([" ", "."], ["_","a"],$hospital->name).'.'.$thumbnail->getClientOriginalExtension();
+            $upload_path = 'images/hospitals/logos/';
+            $image_url = $upload_path.$image_full_name;
+            $success = $thumbnail->move($upload_path, $image_full_name);
+            $hospital->logo = $image_url;
+        }
+        $hospital->update();
+
+
+        return redirect()->route('hospitals.index');
     }
 
     /**
@@ -115,8 +139,13 @@ class HospitalController extends Controller
      * @param  \App\Models\Hospital  $hospital
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Hospital $hospital)
+    public function destroy($id)
     {
-        //
+        $hospital = Hospital::find($id);
+        if (\File::exists($hospital->logo)) {
+            \File::delete($hospital->logo);
+        }
+        $hospital->delete();
+        return response()->json(['status' => 'success', 'message' => 'Hospital deleted successfylly !']);
     }
 }
