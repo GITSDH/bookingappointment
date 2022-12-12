@@ -21,24 +21,24 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // return Auth::user()->portal->id;
-        // $user = User::find(9);
-        // return User::find(9)->subscription->first()->id;
-        // return Auth::user()->subscription;
-        // return User::whereHas('subscription', function($q){
-        //     $q->where('id', 1);
-        // })->get();
+
 
         if ($request->ajax()) {
-            // if (Auth::user()->hasRole('admin')) {
-            //     return Datatables::of(
-            //         User::whereHas('subscription', function($q){
-            //             $q->where('id', Auth::user()->portal->id);
-            //         })
-            //         )->addIndexColumn()->make(true);
-
-            // }
-            return Datatables::of(User::query())->addIndexColumn()->make(true);
+            if (Auth::user()->hasRole('admin')) {
+                $sid =Auth::user()->portal->id;
+                return Datatables::of(
+                    User::whereHas('docprofile', function ($query) use($sid){
+                        $query->where('subscription_id', $sid);
+                    })->get()
+                    )->addIndexColumn()->make(true);
+            }
+            if (Auth::user()->hasRole('superadmin')) {
+                return Datatables::of(
+                    User::whereHas('roles', function ($query){
+                        $query->where('name', 'admin');
+                    })->get()
+                    )->addIndexColumn()->make(true);
+            }
         }
         return view('users.index');
     }

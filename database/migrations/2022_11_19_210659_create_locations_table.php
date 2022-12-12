@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('subscription_id')->nullable();
+            $table->foreign('subscription_id')->references('id')->on('subscriptions')->onDelete('cascade');
             $table->timestamps();
         });
     }

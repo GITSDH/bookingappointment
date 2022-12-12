@@ -9,6 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        // return Auth::user()->subscription->first()->id;
         if (Auth::user()->hasRole('admin')) {
             return view('dashboard');
         }

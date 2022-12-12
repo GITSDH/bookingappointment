@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('sub_number')->nullable();
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users');
+            $table->tinyInteger('status')->default(1)->comment('1=>Active,2=>Inactive,3=>Suspended,4=>Outdated');
             $table->timestamps();
         });
     }

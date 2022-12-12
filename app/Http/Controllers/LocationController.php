@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
 
@@ -18,7 +19,9 @@ class LocationController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return Datatables::of(Location::query())->addIndexColumn()->make(true);
+            return Datatables::of(
+                Location::where('subscription_id',Auth::user()->portal->id)->get()
+                )->addIndexColumn()->make(true);
         }
 
         return view('locations.index');
@@ -43,7 +46,7 @@ class LocationController extends Controller
      */
     public function store(StoreLocationRequest $request)
     {
-        $location = Location::create(['name'=>$request->name]);
+        $location = Location::create(['name'=>$request->name,'subscription_id'=>Auth::user()->portal->id]);
         return redirect()->route('locations.index');
     }
 

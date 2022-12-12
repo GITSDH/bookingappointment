@@ -29,6 +29,11 @@ Route::group(['namespace' => 'App\Http\Controllers','middleware' => ['auth']], f
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
     Route::get('/bookAppointment', 'AppoinmentController@bookAppoinment')->name('bookAppointment');
     Route::get('/myappoinment', 'AppoinmentController@myappoinment')->name('myappoinment');
+
+    Route::group(['prefix' => 'common'], function () {
+        Route::get('getfacility', 'CommonController@getfacility')->name('getfacility');
+        Route::get('getDoctor', 'CommonController@getDoctor')->name('getDoctor');
+    });
 });
 
 Route::group(['middleware' => ['auth']], function() {

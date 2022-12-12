@@ -27,4 +27,13 @@ class Hospital extends Model
     {
         return $this->belongsTo(Location::class,'location_id');
     }
+
+
+    // public function doctors()
+    // {
+    //     return $this->hasMany(Doctor::class, 'hospital_id', 'id')
+    //         ->join('users', 'users.id', 'doctors.user_id');
+    // }
+
+
 }

@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\Subscription;
+use App\Models\UserSubscription;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -34,6 +37,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -41,7 +45,7 @@ class RegisteredUserController extends Controller
         ]);
 
 
-        $role = Role::where('name','user')->first();
+        $role = Role::where('name', 'user')->first();
 
 
         $user = User::create([
@@ -55,6 +59,12 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        // Ceating user subscription
+        if ($request->cookie('subscriptionnumber')) {
+            $sub = Subscription::where('sub_number', $request->cookie('subscriptionnumber'))->first();
+            $usersub = UserSubscription::create(['user_id' => $user->id, 'subscription_id' => $sub->id]);
+        }
 
         return redirect(RouteServiceProvider::HOME);
     }

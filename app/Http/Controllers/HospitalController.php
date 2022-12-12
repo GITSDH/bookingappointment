@@ -6,7 +6,6 @@ use App\Models\Hospital;
 use App\Http\Requests\StoreHospitalRequest;
 use App\Http\Requests\UpdateHospitalRequest;
 use App\Models\Location;
-use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
@@ -22,7 +21,7 @@ class HospitalController extends Controller
      */
     public function index(Request $request)
     {
-        //
+
         if ($request->ajax()) {
             return Datatables::of(Hospital::query())->addIndexColumn()->make(true);
         }
@@ -52,15 +51,12 @@ class HospitalController extends Controller
         // return $subID = Auth::user()->portal->sub_number;
         // return $request;
 
-
-        $subscription =  Subscription::where('sub_number',Auth::user()->portal->sub_number)->first();
-
         $hospital = new Hospital();
         $hospital->name = $request->name;
         $hospital->type = $request->type;
         $hospital->location_id = $request->location;
         $hospital->description = $request->description;
-        $hospital->subscription_id = $subscription->id;
+        $hospital->subscription_id = Auth::user()->portal->id;
 
 
         if ($request->file('logo')) {
